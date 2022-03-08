@@ -11,7 +11,7 @@ export function postCardReducer(state = initialState, action) {
         case cardConstant.POSTCARD_SUCCESS:
             return {
                 card: action.card,
-                message:'Card saved Successfully'
+                message:'Card Added Successfully'
             };
         case cardConstant.POSTCARD_FAILURE:
             return {};

@@ -11,7 +11,7 @@ import {
 } from "../../_helpers/utils.js";
 import Header from "../Header/header.js";
 
-// import "react-credit-cards/es/styles-compiled.css";
+//import "react-credit-cards/es/styles-compiled.css";
 
 class Homepage extends React.Component {
   constructor(props) {
@@ -57,7 +57,6 @@ class Homepage extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const message=this.props.message
     const data= {
       name:this.state.name,
       cardNumber:this.state.number,
@@ -67,8 +66,6 @@ class Homepage extends React.Component {
     }
     
     this.props.createCard(data) 
-    console.log(message)
-    
   };
 
   render() {
@@ -79,7 +76,7 @@ class Homepage extends React.Component {
         < Header />
         <br/>
         <div className="App-payment">
-          <h2>Add Your Card</h2>
+          <h2>{this.props.message||'Add Your Card'}</h2>
 
           <Cards
             number={number}
@@ -163,7 +160,6 @@ class Homepage extends React.Component {
               <button className="btn btn-primary btn-block">Add</button>
             </div>
           </form>
-
         </div>
       </div>
     );

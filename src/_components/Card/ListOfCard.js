@@ -13,6 +13,7 @@ const CardWrapper = styled.div`
 border:1px solid black;
 padding: 10px;
 margin: 5px
+cursor:pointer;
 `
 
 class SupportedCards extends React.Component {
@@ -44,7 +45,6 @@ class SupportedCards extends React.Component {
                 <Link to={`cardDetail/${itm.id}`} key={itm.id}>
                   <CardWrapper key={itm.id} onClick={() => this.handleClick(itm.id)}>
                     <Cards
-                      
                       number={itm.cardNumber}
                       expiry={itm.cardExpiration}
                       name={itm.cardHolder}
