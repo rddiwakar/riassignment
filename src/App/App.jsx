@@ -1,13 +1,15 @@
 import React from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import { SupportedCards } from '../_components/Card/ListOfCard'
 import { history } from '../_helpers';
 import { alertActions } from '../_actions';
 import { PrivateRoute } from '../_components';
-import { HomePage } from '../HomePage';
+// import { HomePage } from '../HomePage';
 import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
+import CardDetail from '../_components/Card/CardDetail';
+import { Homepage } from '../_components/Card/AddCard';
 
 class App extends React.Component {
     constructor(props) {
@@ -21,7 +23,7 @@ class App extends React.Component {
 
     render() {
         const { alert } = this.props;
-        return (
+        return (  
             <div className="jumbotron">
                 <div className="container">
                     <div className="col-sm-8 col-sm-offset-2">
@@ -30,10 +32,11 @@ class App extends React.Component {
                         }
                         <Router history={history}>
                             <Switch>
-                                <PrivateRoute exact path="/" component={HomePage} />
+                                <PrivateRoute exact path="/" component={Homepage} />
+                                <PrivateRoute exact path="/listofcards" component={SupportedCards} />
+                                <PrivateRoute exact path="/cardDetail" component={CardDetail} />
                                 <Route path="/login" component={LoginPage} />
                                 <Route path="/register" component={RegisterPage} />
-                                <Redirect from="*" to="/" />
                             </Switch>
                         </Router>
                     </div>

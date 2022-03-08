@@ -8,22 +8,25 @@ export const userService = {
     getAll,
     getById,
     update,
-    delete: _delete
+    delete: _delete,
+    postCard,
+    getAllCard,
+    getCardById
 };
 
-function login(username, password) {
+function login(email, password) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ email, password })
     };
 
-    return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
+    return fetch(`${config.apiUrl}/auth/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('user', JSON.stringify(user));
-
+            console.log('user', 'login successfull')
             return user;
         });
 }
@@ -57,8 +60,8 @@ function register(user) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
-
-    return fetch(`${config.apiUrl}/users/register`, requestOptions).then(handleResponse);
+   
+    return fetch(`${config.apiUrl}/auth/register`, requestOptions).then(handleResponse);
 }
 
 function update(user) {
@@ -79,6 +82,52 @@ function _delete(id) {
     };
 
     return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
+}
+function postCard(data) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            name: data.name,
+            cardNumber: data.cardNumber,
+            cardExpiration:data.cardExpiration,
+            category: data.category,
+            cardHolder: data.cardHolder
+        })
+    };
+
+    return fetch(`${config.apiUrl}/cards`, requestOptions).then(handleResponse)
+        
+        // .then(card => {
+        //     console.log(card, 'cardadded successfully')
+        //     return card;
+        // })
+        // .catch(error => {
+        //     console.log(error, 'error occured')
+        // });
+}
+function getAllCard() {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+
+    return fetch(`${config.apiUrl}/cards`, requestOptions).then(handleResponse);
+}
+function getCardById(id) {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+    };
+
+    return fetch(`${config.apiUrl}/cards/${id}`, requestOptions).then(handleResponse)
+        // .then(card => {
+        //     console.log(card, 'card detail fetch')
+        //     return card;
+        // })
+        // .catch(error => {
+        //     console.log(error, 'error occured')
+        // });
 }
 
 function handleResponse(response) {
