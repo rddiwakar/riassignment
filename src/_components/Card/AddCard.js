@@ -72,7 +72,7 @@ class Homepage extends React.Component {
     const { cardHolder, number, expiry, cvc, focused  } = this.state;
 
     return (
-      <div key="Payment" className="col-md-6 col-md-offset-3">
+      <div key="Payment" className="col-md-6 col-md-offset-3" >
         < Header />
         <br/>
         <div className="App-payment">
@@ -151,7 +151,7 @@ class Homepage extends React.Component {
                 className="form-control"
                 type="text"
                 name="category"
-                placeholder="Category"
+                placeholder="type from VISA/MC/AE"
                 onChange={this.handleInputChange}
                 onFocus={this.handleInputFocus}
               />
