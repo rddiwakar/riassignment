@@ -1,8 +1,8 @@
 import { cardConstant } from '../../_constants';
 
-const postCardDetail = {}
+const initialState = { card:{}, message:'' }
 
-export function postCardReducer(state = postCardDetail, action) {
+export function postCardReducer(state = initialState, action) {
     switch (action.type) {
         case cardConstant.POSTCARD_REQUEST:
             return {

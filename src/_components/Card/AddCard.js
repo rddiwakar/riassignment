@@ -11,7 +11,7 @@ import {
 } from "../../_helpers/utils.js";
 import Header from "../Header/header.js";
 
-//import "react-credit-cards/es/styles-compiled.css";
+// import "react-credit-cards/es/styles-compiled.css";
 
 class Homepage extends React.Component {
   constructor(props) {
@@ -57,6 +57,7 @@ class Homepage extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    const message=this.props.message
     const data= {
       name:this.state.name,
       cardNumber:this.state.number,
@@ -64,8 +65,10 @@ class Homepage extends React.Component {
       category:this.state.category,
       cardHolder:this.state.cardHolder,
     }
-    this.props.createCard(data)
-    console.log(data)
+    
+    this.props.createCard(data) 
+    console.log(message)
+    
   };
 
   render() {
@@ -166,10 +169,14 @@ class Homepage extends React.Component {
     );
   }
 }
-
+function mapstoState(state){
+  const {message} = state.postCardReducer;
+  
+  return {message}
+}
 const actionCreators = {
   createCard: cardActions.createCard,
 };
-const connectedAddCart = connect(null,actionCreators)(Homepage)
+const connectedAddCart = connect(mapstoState,actionCreators)(Homepage)
 
 export { connectedAddCart as Homepage };

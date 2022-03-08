@@ -1,8 +1,8 @@
 import { cardConstant } from '../../_constants';
 
-const getCardData = {}
+const initialState = {card:{},message:''}
 
-export function getCardReducer(state = getCardData, action) {
+export function getCardReducer(state = initialState, action) {
     switch (action.type) {
         case cardConstant.GETCARD_REQUEST:
             return {
@@ -10,7 +10,8 @@ export function getCardReducer(state = getCardData, action) {
             };
         case cardConstant.GETCARD_SUCCESS:
             return {
-                card: action.card
+                card: action.carddetail,
+                message:'cardDetail showed successfully'
             };
         case cardConstant.GETCARD_FAILURE:
             return {};

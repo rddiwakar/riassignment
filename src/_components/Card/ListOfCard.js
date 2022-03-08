@@ -1,92 +1,62 @@
 import React from "react";
 import Cards from "react-credit-cards";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from 'styled-components'
 import { cardActions } from "../../_actions/card.action";
 import Header from "../Header/header";
 
-const CardList  = styled.div`
-background:red;
+const CardList = styled.div`
+text-align:center
+`
+const CardWrapper = styled.div`
+border:1px solid black;
+padding: 10px;
+margin: 5px
 `
 
 class SupportedCards extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props)
+    this.handleClick = this.handleClick.bind(this)
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.getCardsListData()
   }
+  handleClick(id) {
+    this.props.getCardDetail(id)
+   
+  }
+
   render() {
+    const list = this.props.getCardList;
+    const message = this.props.message
     return (
       <CardList className="App-cards">
-        {/* {console.log(GetCardLIST)} */}
         <Header />
         <br />
         <h3>Supported Cards</h3>
         <div className="App-cards-list">
-          <Cards
-            name="John Smith"
-            number="5555 4444 3333 1111"
-            expiry="10/20"
-            cvc="737"
-          />
-          <Cards
-            name="John Smith"
-            number="4111 1111 1111 1111"
-            expiry="10/20"
-            cvc="737"
-          />
+          {
+            list && list.results ? list.results.map((itm, idx) => {
+              return (
+                <Link to={`cardDetail/${itm.id}`} key={itm.id}>
+                  <CardWrapper key={itm.id} onClick={() => this.handleClick(itm.id)}>
+                    <Cards
+                      
+                      number={itm.cardNumber}
+                      expiry={itm.cardExpiration}
+                      name={itm.cardHolder}
+                      cvc='123'
+                      issuer={itm.category}
+                    />
+                  </CardWrapper>
+                </Link>
+              )
+            }):<div>Loading ...</div>
+          }
 
-          <Cards
-            name="John Smith"
-            number="3700 0000 0000 002"
-            expiry="10/20"
-            cvc="737"
-          />
-
-          <Cards
-            name="John Smith"
-            number="3600 666633 3344"
-            expiry="10/20"
-            cvc="737"
-          />
-          <Cards
-            name="John Smith"
-            number="6011 6011 6011 6611"
-            expiry="10/20"
-            cvc="737"
-          />
-
-          <Cards
-            name="John Smith"
-            number="5066 9911 1111 1118"
-            expiry="10/20"
-            cvc="737"
-          />
-
-          <Cards
-            name="John Smith"
-            number="6250 9460 0000 0016"
-            expiry="10/20"
-            cvc="737"
-          />
-
-          <Cards
-            name="John Smith"
-            number="6062 8288 8866 6688"
-            expiry="10/20"
-            cvc="737"
-          />
-
-          <Cards
-            name="John Smith"
-            number="**** **** **** 7048"
-            expiry="10/20"
-            cvc="737"
-            preview={true}
-            issuer="visa"
-          />
         </div>
       </CardList>
     );
@@ -94,11 +64,13 @@ class SupportedCards extends React.Component {
 }
 const actionCreators = {
   getCardsListData: cardActions.getCardsListData,
+  getCardDetail: cardActions.getCardDetail
 };
-function mapState(state){
-  const GetCardLIST = state.getCardListReducer.GetCardLIST;
-  return GetCardLIST
-  
+function mapState(state) {
+  const { getCardList } = state.getCardListReducer;
+  const { message } = state.getCardListReducer;
+  return { getCardList, message }
+
 }
-const connectedSupportedCards = connect(mapState, actionCreators)(SupportedCards) ;
-export  {connectedSupportedCards as SupportedCards}
+const connectedSupportedCards = connect(mapState, actionCreators)(SupportedCards);
+export { connectedSupportedCards as SupportedCards }

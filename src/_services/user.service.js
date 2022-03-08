@@ -117,7 +117,7 @@ function getAllCard() {
 function getCardById(id) {
     const requestOptions = {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {...authHeader(), 'Content-Type': 'application/json' },
     };
 
     return fetch(`${config.apiUrl}/cards/${id}`, requestOptions).then(handleResponse)

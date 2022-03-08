@@ -13,7 +13,6 @@ function createCard(data) {
         userService.postCard(data)
             .then(
                 card => {
-                    console.log(card) 
                     dispatch(success(card));
                 },
                 error => {
@@ -56,11 +55,10 @@ function getCardDetail(id){
     return dispatch => {
         dispatch(request(id));
 
-        // CardData.getCardById(id)
         userService.getCardById(id)
             .then(
                 carddetail => { 
-                    console.log(carddetail)
+                    // console.log(carddetail)
                     dispatch(success(carddetail));
                 },
                 error => {
